@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>627276101240-7j156kkjghflq2fguvafea9nqatuhkgv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.627276101240-7j156kkjghflq2fguvafea9nqatuhkgv</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD6gtADWeCHAR3sLhG2XQt3l4Jp7XCRw1M</string>
+	<key>GCM_SENDER_ID</key>
+	<string>627276101240</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.origamiers</string>
+	<key>PROJECT_ID</key>
+	<string>origamier-1578d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>origamier-1578d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:627276101240:ios:6e5a91d073d35097a9df8d</string>
+</dict>
+</plist>

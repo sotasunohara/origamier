@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "627276101240",
+    "project_id": "origamier-1578d",
+    "storage_bucket": "origamier-1578d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627276101240:android:6265c4e800496634a9df8d",
+        "android_client_info": {
+          "package_name": "com.example.origamiers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627276101240-1pgprbjbfeq42s382gqvbkgh1or7p97k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOeksYEGppHy9eNn2mATtXCmFGlhdZ3t4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627276101240-1pgprbjbfeq42s382gqvbkgh1or7p97k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "627276101240-7j156kkjghflq2fguvafea9nqatuhkgv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.origamiers"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
