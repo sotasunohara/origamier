@@ -15,6 +15,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
   final TextEditingController _passwordController = new TextEditingController();
   final TextEditingController _secondPasswordController = new TextEditingController();
 
+  Auth auth = Auth();
+
   @override 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +32,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
               form("repeat password", _secondPasswordController, isPassword: true),
               TextButton(
                 onPressed: () async {
-                  signUp(_emailController.text, _passwordController.text);
+                  debugPrint(_emailController.text);
+                  // signup
+                  auth.signUp(_emailController.text, _passwordController.text, context);
                 }, 
                 child: Container(
                   decoration: BoxDecoration(
