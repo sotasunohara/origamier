@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:origamiers/auth/auth.dart';
 import 'package:origamiers/library/colors.dart';
 import 'package:origamiers/library/widget.dart';
+import 'package:origamiers/pages/auth_pages/login_page.dart';
 
 class SignupPage extends ConsumerStatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -11,11 +12,11 @@ class SignupPage extends ConsumerStatefulWidget {
 }
 
 class _SignupPageState extends ConsumerState<SignupPage> {
+  final TextEditingController _userNameController = new TextEditingController();
   final TextEditingController _emailController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
   final TextEditingController _secondPasswordController = new TextEditingController();
 
-  Auth auth = Auth();
 
   @override 
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                 onPressed: () async {
                   debugPrint(_emailController.text);
                   // signup
-                  auth.signUp(_emailController.text, _passwordController.text, context);
+                  Auth().signUp(_emailController.text, _passwordController.text, context);
                 }, 
                 child: Container(
                   decoration: BoxDecoration(
@@ -45,6 +46,22 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                   ),child: Text("Sign Up", style: TextStyle(color: Colors.white)),
                 ),
               ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: ((context) {
+                      return LoginPage();
+                    }))
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(color: Colors.red)
+                    ]
+                  ),child: Text("アカウントを作成済みの方はこちら", style: TextStyle(color: Colors.white)),
+                ),),
           ]),
         ),
       ),

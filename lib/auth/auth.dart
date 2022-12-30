@@ -1,21 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:origamiers/pages/auth_pages/login_page.dart';
 import 'package:origamiers/pages/registration_pages/register_userName.dart';
 import 'package:origamiers/providers/user_providers.dart';
+import 'package:origamiers/registration/registerUserData.dart';
 
 // Singleton にする
 class Auth {
-  static final Auth _instance = Auth._internal();
   late UserCredential _credential;
+  String userId = "";
   bool isLogedIn = false;
-
-  /* SingleTon にする */
-  factory Auth() {
-    return _instance;
-  }
-  Auth._internal();
-  /* ここまで */
 
   // サインアップする
   Future<void> signUp(String email, String password, BuildContext context) async{
@@ -24,11 +19,10 @@ class Auth {
       // credential にユーザIDが渡される
       _credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
       debugPrint("登録成功");
-      // 個人アカウント設定画面に移動
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder:(context) => RegisterUserNamePage(),
-        ),
+        MaterialPageRoute(builder: (context) {
+          return LoginPage();
+        },),
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -47,6 +41,7 @@ class Auth {
     try{
       _credential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       isLogedIn = true;
+      
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         debugPrint('No user found for that email.');
