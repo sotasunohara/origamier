@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
 import 'package:origamiers/auth/auth.dart';
 import 'package:origamiers/model/users.dart';
+import 'package:origamiers/sharedPreference/sharedPref.dart';
 
-Future<void> registerUserName(String userName) async {
+Future<bool> registerUserName(String userName) async {
+  String userId = await SharedPref.getStringData(Keys.userId);
   // Firebase にないか確かめる
 
   QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance.collection('Users').get();
@@ -11,29 +13,51 @@ Future<void> registerUserName(String userName) async {
     debugPrint("ok");
     List<QueryDocumentSnapshot<Map<String, dynamic>>> docs = querySnapshot.docs;
     bool isUserNameExisted = false;
+
+    // Users コレクションの中身が存在する場合は userName がすでに存在するか確認
     if(docs.isNotEmpty) {
       for (QueryDocumentSnapshot<Map<String, dynamic>> doc in docs) {
         if(doc.exists) {
-          Users u = Users.fromFirestore(doc, null);
-          if(u.userName == userName) {
+          if(doc.data()['userName'] == userName) {
             isUserNameExisted = true;
             break;
           }
         }
       }
     }
-    // Firebase になければ登録する
-    if(docs.isEmpty || !isUserNameExisted) {
-      Auth auth = Auth();
-      Users u = Users(
-        userName: userName,
-        userIcon: "",
-        comment: "",
-        artworks: [],
-      );
-      await FirebaseFirestore.instance.collection('Users').doc(auth.userId).set(u.toFirestore());
-      debugPrint("追加成功");
+    if(isUserNameExisted) {
+      debugPrint("同じユーザー名は存在します。");
+      return false;
     }else {
-      debugPrint("そのユーザー名は登録済みです。");
+      debugPrint("同じユーザー名は存在しない");
+      // SharedPreference に登録
+      SharedPref.saveStringData(Keys.userName, userName);
+      DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
+      // userId がすでに存在する場合
+      if(doc.exists) {
+        Users u = Users(
+          userName: userName,
+          comment: doc.data()!['comment'],
+          userIcon: doc.data()!['userIcon'],
+          artworks: doc.data()!['artworks']
+        );
+        // データをFirestore に更新
+        await FirebaseFirestore.instance.collection('Users').doc(userId).set(
+          u.toFirestore()
+        );
+        debugPrint("追加成功");
+      } else {
+        debugPrint("新規");
+        // 新規のユーザの場合
+        Users u = Users(
+          userName: userName,
+          userIcon: "",
+          comment: "",
+          artworks: []
+        );
+        await FirebaseFirestore.instance.collection('Users').doc(userId).set(u.toFirestore());
+        debugPrint("追加成功");
+      }
+      return true;
     }
 }

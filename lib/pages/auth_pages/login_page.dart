@@ -29,7 +29,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               form("password", _passwordController, isPassword: true),
               TextButton(
                 onPressed: () async{
-                  await Auth().logIn(_emailController.text, _passwordController.text);
+                  await Auth().logIn(_emailController.text, _passwordController.text, context);
                 }, 
                 child: Container(
                   decoration: BoxDecoration(
