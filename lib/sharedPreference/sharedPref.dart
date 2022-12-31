@@ -25,5 +25,5 @@ class SharedPref {
 enum Keys {
   userId,
   userName,
-  email,
+  email
 }
