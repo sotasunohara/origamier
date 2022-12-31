@@ -40,7 +40,7 @@ class _OrigamierAppState extends ConsumerState<OrigamierApp> {
           if(snapshot.data == null || snapshot.data == "") {
             return const SignupPage();
           }else {
-            return const MainPage();
+            return MainPage();
           }
         } else {
           return Container(child: Text("エラー"));
