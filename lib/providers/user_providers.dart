@@ -6,6 +6,7 @@ import 'package:origamiers/sharedPreference/sharedPref.dart';
 StateProvider<String> userIdProvider = StateProvider(((ref) => ""));
 
 FutureProvider<UserProfile> userProvider = FutureProvider(((ref) async {
+  // sharedpreference から userId を取得
   String userId = await SharedPref.getStringData(Keys.userId);
 
   // ユーザデータを取得

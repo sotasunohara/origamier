@@ -1,4 +1,4 @@
- import 'dart:math';
+import 'dart:math';
 
 
 String generateCode([int length = 10]) {

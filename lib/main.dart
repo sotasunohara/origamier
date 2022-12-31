@@ -49,4 +49,3 @@ class _OrigamierAppState extends ConsumerState<OrigamierApp> {
     );
   }
 }
-
