@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
 import 'package:origamiers/auth/auth.dart';
-import 'package:origamiers/model/users.dart';
 import 'package:origamiers/sharedPreference/sharedPref.dart';
 
 Future<bool> registerUserName(String userName) async {
@@ -35,27 +34,25 @@ Future<bool> registerUserName(String userName) async {
       DocumentSnapshot<Map<String, dynamic>> doc = await FirebaseFirestore.instance.collection('Users').doc(userId).get();
       // userId がすでに存在する場合
       if(doc.exists) {
-        Users u = Users(
-          userName: userName,
-          comment: doc.data()!['comment'],
-          userIcon: doc.data()!['userIcon'],
-          artworks: doc.data()!['artworks']
-        );
         // データをFirestore に更新
         await FirebaseFirestore.instance.collection('Users').doc(userId).set(
-          u.toFirestore()
+          {
+            "userName": userName,
+            "comment": doc.data()!['comment'],
+            "userIcon": doc.data()!['userIcon']
+          }
         );
         debugPrint("追加成功");
       } else {
         debugPrint("新規");
         // 新規のユーザの場合
-        Users u = Users(
-          userName: userName,
-          userIcon: "",
-          comment: "",
-          artworks: []
+        await FirebaseFirestore.instance.collection('Users').doc(userId).set(
+          {
+            "userName": userName,
+            "comment": "",
+            "userIcon": ""
+          }
         );
-        await FirebaseFirestore.instance.collection('Users').doc(userId).set(u.toFirestore());
         debugPrint("追加成功");
       }
       return true;
