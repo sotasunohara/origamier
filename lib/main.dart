@@ -37,7 +37,7 @@ class _OrigamierAppState extends ConsumerState<OrigamierApp> {
       future: SharedPref.init(),
       builder: (context, snapshot) {
         if(snapshot.hasData) {
-          if(SharedPref.getStringData(Keys.userId) != "" || SharedPref.getStringData(Keys.userId) != null) {
+          if(SharedPref.getStringData(Keys.userId) == "" || SharedPref.getStringData(Keys.userId) == null) {
             return const SignupPage();
           }else {
             return MainPage();

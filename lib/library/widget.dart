@@ -25,7 +25,7 @@ Widget form(String hintText, TextEditingController _controller, {bool isPassword
   );
 }
 
-Widget _profileIcon(
+Widget profileIcon(
   UserProfile user,
   double size,
   BuildContext context,
@@ -33,7 +33,9 @@ Widget _profileIcon(
 ) {
   return ClipOval(
     child: GestureDetector(
-      child: Image.network(user.icon, width: size, height: size),
+      child: user.icon != ""?
+        Image.network(user.icon, width: size, height: size):
+        Icon(Icons.person, size: size),
       onTap: () {
         //_ref.read(userProvider)
         Navigator.of(context).push(

@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:origamiers/library/colors.dart';
+import 'package:origamiers/model/userProfile.dart';
+import 'package:origamiers/pages/profile_pages/profile_page.dart';
+import 'package:origamiers/providers/user_providers.dart';
 import 'package:origamiers/sharedPreference/sharedPref.dart';
 
 enum MainPages{
@@ -21,17 +24,26 @@ class MainPage extends ConsumerWidget {
     _ref = ref;
     // 現在表示させるページを取得
     _currentPage = ref.watch(mainPageProvider);
-
+    debugPrint(ref.watch(userIdProvider));
     return Scaffold(
       backgroundColor: backgroundColor, 
       body: SafeArea(
-        child: Container(
-          child: Text("ようこそ"),
-        ),
+        child: switchPage(_currentPage.index),
       ),
       bottomNavigationBar: _bottomBar(),
     );
   }
+
+  Widget switchPage(int index) {
+    return IndexedStack(
+      index: index,
+      children: [
+        ProfilePage(),
+        ProfilePage()
+      ],
+    );
+  }
+
   Widget _bottomBar() {
     return BottomAppBar(
       child: Row(

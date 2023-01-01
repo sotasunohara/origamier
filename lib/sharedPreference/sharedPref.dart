@@ -6,9 +6,10 @@ class SharedPref {
   static bool isInitialized = false;
 
   // sharedpreference のインスタンスの作成
-  static Future<void> init() async{
+  static Future<bool> init() async{
     pref = await SharedPreferences.getInstance();
     isInitialized = true;
+    return true;
   }
 
   static void saveStringData(Keys key, String value) {

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:origamiers/library/colors.dart';
 import 'package:origamiers/model/userProfile.dart';
 import 'package:origamiers/providers/user_providers.dart';
+import 'package:origamiers/library/widget.dart';
 
 class ProfilePage extends ConsumerWidget {
   late WidgetRef _ref;
@@ -11,33 +13,52 @@ class ProfilePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     _ref = ref;
 
-    return FutureBuilder(
-      future: _ref.read(userProvider.future),
-      builder: ((BuildContext context, AsyncSnapshot<UserProfile> snapshot) {
-        if(snapshot.hasData) {
-          userProfile = snapshot.data!;
-          return Scaffold(
-          appBar: _appBar(context, userProfile),
+    AsyncValue<UserProfile> user = _ref.watch(userProvider);
+
+    return user.when(
+      loading: () => Container(child: Text("読み込み中")),
+      error:(error, stackTrace) => Text("エラー発生 $error",),
+      data:(data) {
+        userProfile = data;
+        return Scaffold(
+          appBar: _appBar(context, userProfile, _ref),
           body: Container(),
         );
-        }else {
-          return Scaffold(body: Container());
-        }
-
-      }
-      ));
-
+      },
+    );
   }
   
-  PreferredSize _appBar(BuildContext context, UserProfile userProfile) {
+  PreferredSize _appBar(BuildContext _context, UserProfile userProfile, WidgetRef _ref) {
     return PreferredSize(
       child: Column(
         children: [
-          SizedBox(width: 100,),
-          
-        ],
+          SizedBox(height: 5,),
+          Row(
+            children: [
+              SizedBox(height: 5),
+              _profileNamePlate(_context, userProfile, _ref)
+            ],),
+        ]
       ),
-      preferredSize: Size(MediaQuery.of(context).size.width, 60),
+       
+      preferredSize: Size(MediaQuery.of(_context).size.height, 100),
+    );
+  }
+
+  Widget _profileNamePlate(BuildContext _context, UserProfile userProfile, WidgetRef _ref) {
+    return GestureDetector(
+      child: Row(
+        children: [
+          profileIcon(
+            userProfile,
+            50,
+            _context,
+            _ref
+          ),
+          SizedBox(width: 5,),
+          Text(userProfile.userName, style: TextStyle(color: userNameTagColor, fontSize: 20),)
+        ]
+      )
     );
   }
 }
