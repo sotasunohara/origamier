@@ -33,17 +33,19 @@ class _OrigamierAppState extends ConsumerState<OrigamierApp> {
   // 初期化処理
   @override 
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: SharedPref.getStringData(Keys.userId).asStream(),
+    return FutureBuilder(
+      future: SharedPref.init(),
       builder: (context, snapshot) {
         if(snapshot.hasData) {
-          if(snapshot.data == null || snapshot.data == "") {
+          if(SharedPref.getStringData(Keys.userId) != "" || SharedPref.getStringData(Keys.userId) != null) {
             return const SignupPage();
           }else {
             return MainPage();
           }
-        } else {
+        } else if(snapshot.hasError){
           return Container(child: Text("エラー"));
+        } else {
+          return Container(child: Text("お待ちください"));
         }
       },
     );

@@ -11,13 +11,13 @@ class SharedPref {
     isInitialized = true;
   }
 
-  static void saveStringData(Keys key, String value) async{
-    if(!isInitialized) await init();
-    await pref.setString(key.name, value);
+  static void saveStringData(Keys key, String value) {
+    //if(!isInitialized) await init();
+    pref.setString(key.name, value);
   }
 
-  static Future<String> getStringData(Keys key) async{
-    if(!isInitialized) await init();
+  static String getStringData(Keys key) {
+    //if(!isInitialized) await init();
     return pref.getString(key.name)!;
   }
 }
