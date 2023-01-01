@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:origamiers/library/colors.dart';
 import 'package:origamiers/model/userProfile.dart';
 import 'package:origamiers/pages/profile_pages/profile_page.dart';
+import 'package:origamiers/pages/submition_pages/selectPhotos_page.dart';
 import 'package:origamiers/providers/user_providers.dart';
 import 'package:origamiers/sharedPreference/sharedPref.dart';
 
@@ -14,10 +15,12 @@ enum MainPages{
 
 // 画面の状態のプロバイダ
 final mainPageProvider = StateProvider((ref) => MainPages.timeline,);
+  
+late WidgetRef _ref;
 
 class MainPage extends ConsumerWidget {
   MainPage({Key? key}) : super(key: key);
-  late WidgetRef _ref;
+
   late MainPages _currentPage;
   @override 
   Widget build(BuildContext context, WidgetRef ref) {
@@ -30,7 +33,14 @@ class MainPage extends ConsumerWidget {
       body: SafeArea(
         child: switchPage(_currentPage.index),
       ),
-      bottomNavigationBar: _bottomBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // 投稿する
+          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+            return SelectPhotosPage();
+          }));
+        },
+      ),
     );
   }
 
@@ -44,19 +54,22 @@ class MainPage extends ConsumerWidget {
     );
   }
 
-  Widget _bottomBar() {
+}
+
+
+  Widget bottomBar() {
     return BottomAppBar(
       child: Row(
         children:[
           Spacer(),
-          _bottomBarItem(
+          bottomBarItem(
             MainPages.timeline, 
             Icon(Icons.home, size: 30,)
           ),
           Spacer(),
           SizedBox(width: 40,),
           Spacer(),
-          _bottomBarItem(
+          bottomBarItem(
             MainPages.profile, 
             Icon(Icons.person, size: 30),
           ),
@@ -65,7 +78,7 @@ class MainPage extends ConsumerWidget {
       )
     );
   }
-  Widget _bottomBarItem(
+  Widget bottomBarItem(
     MainPages page,
     Widget icon
   ) {
@@ -76,4 +89,3 @@ class MainPage extends ConsumerWidget {
     }, icon: icon
     );
   }
-}
